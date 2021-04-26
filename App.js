@@ -9,7 +9,6 @@ import {Provider} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const store = createStore(reducer);
-const updateDecks = deckTitle => {};
 
 const App = () => {
   return (
