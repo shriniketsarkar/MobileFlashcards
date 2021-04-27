@@ -1,15 +1,13 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {Text, View} from 'react-native';
-import {SafeAreaView, FlatList, StyleSheet, StatusBar} from 'react-native';
-import Header from './Header';
-
-const DeckItem = ({title, count}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.title}>{count} cards</Text>
-  </View>
-);
+import { connect, useDispatch } from 'react-redux';
+import { Button, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  FlatList,
+  StyleSheet,
+  StatusBar,
+  TouchableHighlight,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,23 +34,52 @@ const styles = StyleSheet.create({
 });
 
 const Decks = props => {
-  const renderItem = ({item}) => (
-    <DeckItem title={item.title} count={item.count} />
+  const { navigation, decks } = props;
+
+  const onPressAddDeck = () => {
+    console.log('Adding a new deck.');
+    navigation.navigate('AddDeck');
+  };
+
+  const DeckItem = ({ title, count }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{count} cards</Text>
+    </View>
   );
+
+  const AddDeck = () => (
+    <Button
+      onPress={onPressAddDeck}
+      title="Add New Deck"
+      color="#841584"
+      accessibilityLabel="Add a new deck."
+    />
+  );
+
+  const renderDeckRow = ({ item, index }) => {
+    const onPress = () =>
+      navigation.navigate('DeckDetails', { deckIndex: index });
+    return (
+      <TouchableHighlight onPress={onPress}>
+        <DeckItem title={item.title} count={item.cards.length} />
+      </TouchableHighlight>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={props.decks}
-        ListHeaderComponent={Header}
-        renderItem={renderItem}
+        data={decks}
+        renderItem={renderDeckRow}
         keyExtractor={item => item.id}
       />
+      <AddDeck />
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = ({decks}) => {
+const mapStateToProps = ({ decks }) => {
   return {
     decks,
   };

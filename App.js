@@ -1,26 +1,30 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Decks from './src/components/Decks';
-import AddDeck from './src/components/AddDeck';
-import {createStore} from 'redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createStore } from 'redux';
 import reducer from './src/reducers';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+import Decks from './src/components/Decks';
+import DeckDetails from './src/components/DeckDetails';
+import AddDeck from './src/components/AddDeck';
+import Error from './src/components/Error';
 
-const Tab = createBottomTabNavigator();
 const store = createStore(reducer);
-
+const DecksStack = createStackNavigator();
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Decks" component={Decks} />
-          <Tab.Screen name="Add Deck" component={AddDeck} />
-        </Tab.Navigator>
+        <DecksStack.Navigator>
+          <DecksStack.Screen name="Decks" component={Decks} />
+          <DecksStack.Screen name="DeckDetails" component={DeckDetails} />
+          <DecksStack.Screen name="AddDeck" component={AddDeck} />
+          <DecksStack.Screen name="Error" component={Error} />
+        </DecksStack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 };
 
 export default App;
+

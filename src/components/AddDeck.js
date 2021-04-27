@@ -12,6 +12,7 @@ import {addDeck} from '../actions/decks';
 import {generateUID} from '../utils/helper';
 
 const AddDeck = props => {
+  const {navigation} = props;
   const dispatch = useDispatch();
   const [deckTitleText, onChangeDeckTitleText] = React.useState();
 
@@ -23,6 +24,7 @@ const AddDeck = props => {
         count: 0,
       }),
     );
+    navigation.navigate('DeckDetails');
   };
   const styles = StyleSheet.create({
     container: {
@@ -34,15 +36,6 @@ const AddDeck = props => {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
-    },
-    fixToText: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    separator: {
-      marginVertical: 8,
-      borderBottomColor: '#737373',
-      borderBottomWidth: StyleSheet.hairlineWidth,
     },
     input: {
       height: 40,
@@ -69,51 +62,14 @@ const AddDeck = props => {
     },
   });
 
-  const AddDeckHeader = () => {
-    return (
-      <View
-        elevation={1}
-        style={{
-          height: 50,
-          width: '97%',
-          margin: 5,
-          backgroundColor: '#fff',
-          border: 2.9,
-          borderColor: 'green',
-          alignSelf: 'center',
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 5,
-          },
-          shadowOpacity: 1,
-          shadowRadius: 2.49,
-          borderRadius: 2,
-        }}>
-        <Text
-          style={{
-            textShadowColor: 'salmon',
-            textShadowOffset: {width: 1, height: 0},
-            textShadowRadius: 10,
-            fontSize: 20,
-            fontWeight: '400',
-            flex: 1,
-            alignSelf: 'center',
-            paddingTop: 10,
-            fontSize: 30,
-          }}>
-          Mobile Flashcards
-        </Text>
-      </View>
-    );
-  };
-
   const AddDeckBody = () => (
     <View style={styles.deckBody}>
       <Text style={{fontSize: 20}}>
         What will be the title of this new Deck:
       </Text>
       <TextInput
+        autoFocus={true}
+        clearButtonMode={true}
         style={styles.input}
         onChangeText={onChangeDeckTitleText}
         value={deckTitleText}
@@ -130,7 +86,6 @@ const AddDeck = props => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fullBody}>
-        <AddDeckHeader>Add Deck</AddDeckHeader>
         <AddDeckBody />
       </View>
     </SafeAreaView>
