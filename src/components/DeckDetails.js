@@ -25,6 +25,7 @@ const DeckDetails = props => {
     if (!deck.cards.length) {
       navigation.navigate('Error');
     }
+    navigation.navigate('Quiz', { deckId: deckId });
   };
 
   const onPressDeleteDeck = () => {

@@ -10,6 +10,7 @@ import DeckDetails from './src/components/DeckDetails';
 import AddDeck from './src/components/AddDeck';
 import Error from './src/components/Error';
 import AddCard from './src/components/AddCard';
+import Quiz from './src/components/Quiz/Quiz';
 
 const store = createStore(reducer, middlewares);
 const DecksStack = createStackNavigator();
@@ -22,6 +23,7 @@ const App = () => {
           <DecksStack.Screen name="DeckDetails" component={DeckDetails} />
           <DecksStack.Screen name="AddDeck" component={AddDeck} />
           <DecksStack.Screen name="AddCard" component={AddCard} />
+          <DecksStack.Screen name="Quiz" component={Quiz} />
           <DecksStack.Screen name="Error" component={Error} />
         </DecksStack.Navigator>
       </NavigationContainer>
@@ -30,4 +32,3 @@ const App = () => {
 };
 
 export default App;
-
