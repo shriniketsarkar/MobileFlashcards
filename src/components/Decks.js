@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Button, Text, View } from 'react-native';
 import {
   SafeAreaView,

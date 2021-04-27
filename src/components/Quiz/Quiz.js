@@ -1,13 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import {
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { connect } from 'react-redux';
+import { Text, View, Button, SafeAreaView, StyleSheet } from 'react-native';
 import QuizCard from './QuizCard';
 import QuizResult from './QuizResult';
 

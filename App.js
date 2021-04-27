@@ -1,23 +1,27 @@
-import React, {useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createStore} from 'redux';
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createStore } from 'redux';
 import reducer from './src/reducers';
 import middlewares from './src/middlewares';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import Decks from './src/components/Decks';
 import DeckDetails from './src/components/DeckDetails';
 import AddDeck from './src/components/AddDeck';
 import Error from './src/components/Error';
 import AddCard from './src/components/AddCard';
 import Quiz from './src/components/Quiz/Quiz';
-import {Notifications} from 'react-native-notifications';
-import {setupLocalNotification} from './src/utils/helper';
+import { Notifications } from 'react-native-notifications';
+import { setupLocalNotification } from './src/utils/helper';
 
 const store = createStore(reducer, middlewares);
 const DecksStack = createStackNavigator();
+
 const App = () => {
   useEffect(() => {
+    // Initial setup to be done once for when the app loads.
+    // This setup is required for the notification to function properly.
+    // We register for notifications.
     Notifications.registerRemoteNotifications();
 
     Notifications.events().registerNotificationReceivedForeground(
@@ -25,7 +29,7 @@ const App = () => {
         console.log(
           `Notification received in foreground: ${notification.title} : ${notification.body}`,
         );
-        completion({alert: false, sound: false, badge: false});
+        completion({ alert: false, sound: false, badge: false });
       },
     );
 
@@ -35,6 +39,8 @@ const App = () => {
         completion();
       },
     );
+
+    // We trigger setup of our notification using AsyncStorage and Notifcations from react-native-notifications.
     setupLocalNotification();
   }, []);
 
