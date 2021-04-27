@@ -3,8 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { StyleSheet, Text, SafeAreaView, View, Button } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { removeDeck } from '../actions/decks';
-
-const styles = StyleSheet.create({});
+import { clearAllLocalNotifications, setupLocalNotification } from '../utils/helper';
 
 const DeckDetails = props => {
   const { navigation, route, decks } = props;
@@ -24,6 +23,12 @@ const DeckDetails = props => {
     if (!deck.cards.length) {
       return navigation.navigate('Error');
     }
+    // Trigger clearing of notifcations and setup a new notification
+    // for until next time if the user has not started any quiz.
+    // Currently this time is set to next min for demo.
+    clearAllLocalNotifications().then(() => {
+      setupLocalNotification();
+    });
     navigation.navigate('Quiz', { deckId: deckId });
   };
 
