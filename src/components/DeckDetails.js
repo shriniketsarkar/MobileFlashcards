@@ -39,15 +39,15 @@ const DeckDetails = props => {
         <Text>{deck?.cards.length}</Text>
         <Button
           onPress={onPressAddCards}
-          title="Create Card"
+          title="Add Card"
           color="#841584"
           accessibilityLabel="Add a new card to deck."
         />
         <Button
           onPress={onPressStartQuiz}
-          title="Start Quiz"
+          title="Start a Quiz"
           color="#841584"
-          accessibilityLabel="Start Quiz"
+          accessibilityLabel="Start a Quiz"
         />
         <Button
           onPress={onPressDeleteDeck}

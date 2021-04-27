@@ -28,7 +28,7 @@ const QuizResult = props => {
         style={{
           fontSize: 20,
         }}>
-        {`You scored ${correctAns} out of ${totalCards}`}
+        {`You scored ${correctAns} correct out of ${totalCards}.`}
       </Text>
       <Text style={{ fontSize: 20 }}>
         {Math.floor(correctAns / totalCards) * 100 > 70
@@ -37,16 +37,16 @@ const QuizResult = props => {
       </Text>
       <Button
         onPress={onPressRetake}
-        title="Retake Quiz"
+        title="Restart Quiz"
         color="#841584"
-        accessibilityLabel="Retake quiz."
+        accessibilityLabel="Restart Quiz."
       />
       <Button
-      onPress={onPressBack}
-      title="Go Back"
-      color="#841584"
-      accessibilityLabel="Go back to deck view"
-    />
+        onPress={onPressBack}
+        title="Back to Deck"
+        color="#841584"
+        accessibilityLabel="Go back to deck view"
+      />
     </View>
   );
 };

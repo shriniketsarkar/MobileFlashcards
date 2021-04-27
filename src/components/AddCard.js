@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import {
   Text,
@@ -7,9 +7,11 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
+  Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import { handleAddCard } from '../actions/shared';
-import {generateUID} from '../utils/helper';
+import { generateUID } from '../utils/helper';
 
 const AddCard = props => {
   const { navigation, route } = props;
@@ -17,6 +19,14 @@ const AddCard = props => {
   const dispatch = useDispatch();
   const [cardQues, setCardQues] = useState('');
   const [cardAns, setCardAns] = useState('');
+
+  const handleQuesChange = text => {
+    setCardQues(text);
+  };
+
+  const handleAnsChange = text => {
+    setCardAns(text);
+  };
 
   const onPressAddCard = () => {
     const newCardId = generateUID();
@@ -40,6 +50,18 @@ const AddCard = props => {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
+    },
+    saveButton: {
+      borderWidth: 1,
+      borderColor: '#007BFF',
+      backgroundColor: '#007BFF',
+      padding: 15,
+      margin: 5,
+    },
+    saveButtonText: {
+      color: '#FFFFFF',
+      fontSize: 20,
+      textAlign: 'center',
     },
     input: {
       height: 40,
@@ -66,37 +88,30 @@ const AddCard = props => {
     },
   });
 
-  const AddDeckBody = () => (
-    <View style={styles.deckBody}>
-      <Text style={{ fontSize: 20 }}>Enter your question below:</Text>
-      <TextInput
-        clearButtonMode={true}
-        style={styles.input}
-        onChangeText={text => setCardQues(text)}
-        defaultValue={cardQues}
-        placeholder={'Enter question for your card.'}
-      />
-      <Text style={{ fontSize: 20 }}>Enter your answer below:</Text>
-      <TextInput
-        autoFocus={false}
-        clearButtonMode={true}
-        style={styles.input}
-        onChangeText={text => setCardAns(text)}
-        defaultValue={cardAns}
-        placeholder={'Enter answer for the question.'}
-      />
-      <Button
-        onPress={onPressAddCard}
-        title="Add Card"
-        color="#841584"
-        accessibilityLabel="Add a new card."
-      />
-    </View>
-  );
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fullBody}>
-        <AddDeckBody />
+        <View style={styles.deckBody}>
+          <Text style={{ fontSize: 20 }}>Enter your question below:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={'Enter question for your card.'}
+            onBlur={Keyboard.dismiss}
+            onChangeText={handleQuesChange}
+            value={cardQues}
+          />
+          <Text style={{ fontSize: 20 }}>Enter your answer below:</Text>
+          <TextInput
+            style={styles.input}
+            onBlur={Keyboard.dismiss}
+            placeholder={'Enter answer for the question.'}
+            onChangeText={handleAnsChange}
+            value={cardAns}
+          />
+          <TouchableOpacity style={styles.saveButton} onPress={onPressAddCard}>
+            <Text style={styles.saveButtonText}>Add Card</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

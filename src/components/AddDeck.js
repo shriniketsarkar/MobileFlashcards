@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {connect, useDispatch} from 'react-redux';
+import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import {
   Text,
   View,
@@ -7,18 +7,18 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
+  Keyboard,
 } from 'react-native';
-import {addDeck} from '../actions/decks';
-import {generateUID} from '../utils/helper';
+import { addDeck } from '../actions/decks';
+import { generateUID } from '../utils/helper';
 
 const AddDeck = props => {
-  const {navigation} = props;
+  const { navigation } = props;
   const dispatch = useDispatch();
-  const [deckTitleText, onChangeDeckTitleText] = React.useState();
+  const [deckTitleText, onChangeDeckTitleText] = useState('');
 
   const onPressAddDeck = () => {
     const newDeckId = generateUID();
-    console.log('NEW DECK ID : ', newDeckId);
     dispatch(
       addDeck({
         id: newDeckId,
@@ -26,8 +26,13 @@ const AddDeck = props => {
         cards: [],
       }),
     );
-    navigation.navigate('DeckDetails', {deckId: newDeckId});
+    navigation.navigate('DeckDetails', { deckId: newDeckId });
   };
+
+  const isCreateDisabled = () => {
+    return deckTitleText.length === 0;
+  };
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -66,12 +71,13 @@ const AddDeck = props => {
 
   const AddDeckBody = () => (
     <View style={styles.deckBody}>
-      <Text style={{fontSize: 20}}>
+      <Text style={{ fontSize: 20 }}>
         What will be the title of this new Deck:
       </Text>
       <TextInput
         autoFocus={true}
         clearButtonMode={true}
+        onBlur={Keyboard.dismiss}
         style={styles.input}
         onChangeText={onChangeDeckTitleText}
         value={deckTitleText}
@@ -79,6 +85,7 @@ const AddDeck = props => {
       />
       <Button
         onPress={onPressAddDeck}
+        disabled={isCreateDisabled()}
         title="Create Deck"
         color="#841584"
         accessibilityLabel="Add a new deck."
