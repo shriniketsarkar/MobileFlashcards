@@ -1,51 +1,47 @@
-import {ADD_DECK, REMOVE_DECK} from '../actions/decks';
+import { ADD_DECK_CARD, ADD_DECK, REMOVE_DECK } from '../actions/decks';
 
-const initialDecksData = [
-  {
-    id: 'deck-1-id',
+const initialDecksData = {
+  '111111ziyjabvozdd253nd': {
+    id: '111111ziyjabvozdd253nd',
     title: 'Earth Statistics',
     cards: [
-      {
-        ques: 'What is the circumference of Earth?',
-        ans: '24,901 mi',
-      },
-      {
-        ques: 'What makes up Earths atmosphere?',
-        ans: '78% nitrogen and 21% oxygen',
-      },
-      {
-        ques: 'Is Earths atmosphere thin or thick?',
-        ans: 'Extremely Thin',
-      },
+      '8xf0y6ziyjabvozdd253nd',
+      '9xf0y6ziyjabvozdd253nd',
+      '10f0y6ziyjabvozdd253nd',
     ],
   },
-  {
-    id: 'deck-2-id',
+  '222222ziyjabvozdd253nd': {
+    id: '222222ziyjabvozdd253nd',
     title: 'Nervous System',
-    cards: [
-      {
-        ques: 'What does Cerebrum mean?',
-        ans: 'Frontal lobe, parietal lobe, temporal lobe, and occipital lobe',
-      },
-      {
-        ques: 'Function of Frontal Lobe?',
-        ans: 'controls skilled motor functions, memory, and behavior',
-      },
-    ],
+    cards: ['253nd8xf0y6ziyjabvozdd', 'bvozd9xf0y6ziyjad253nd'],
   },
-  {
-    id: 'deck-3-id',
+  '333333ziyjabvozdd253nd': {
+    id: '333333ziyjabvozdd253nd',
     title: 'Cars',
     cards: [],
   },
-];
+};
 
 const decks = (state = initialDecksData, action) => {
   switch (action.type) {
     case ADD_DECK:
-      return [...state, action.deck];
+      return {
+        ...state,
+        [action.deck.id]: action.deck,
+      };
     case REMOVE_DECK:
-      return state.filter(deck => deck.id !== action.id);
+      let stateCopy = { ...state };
+      delete stateCopy[action.id];
+      return stateCopy;
+    case ADD_DECK_CARD:
+      const { cardId, deckId } = action.card;
+      return {
+        ...state,
+        [deckId]: {
+          ...state[deckId],
+          cards: state[deckId].cards.concat([cardId]),
+        },
+      };
     default:
       return state;
   }

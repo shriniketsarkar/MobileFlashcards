@@ -9,14 +9,16 @@ const styles = StyleSheet.create({});
 const DeckDetails = props => {
   const { navigation, route, decks } = props;
   const dispatch = useDispatch();
-  let deckIndex = route?.params?.deckIndex;
-  if (deckIndex === undefined) {
+  let deckId = route?.params?.deckId;
+  if (deckId === undefined) {
     // The route is coming from Add Deck, hence display the last deck.
-    deckIndex = decks.length - 1;
+    deckId = decks.length - 1;
   }
-  const deck = decks[deckIndex];
+  const deck = decks[deckId];
+
   const onPressAddCards = () => {
-    console.log('Add new card pressed.');
+    console.log('Deck ID in Deck Deetails:', deckId);
+    navigation.navigate('AddCard', { deckId: deckId });
   };
 
   const onPressStartQuiz = () => {
@@ -32,8 +34,8 @@ const DeckDetails = props => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text>{deck.title}</Text>
-        <Text>{deck.cards.length}</Text>
+        <Text>{deck?.title}</Text>
+        <Text>{deck?.cards.length}</Text>
         <Button
           onPress={onPressAddCards}
           title="Create Card"

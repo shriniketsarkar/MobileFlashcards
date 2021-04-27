@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {connect, useDispatch} from 'react-redux';
+import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import {
   Text,
   View,
@@ -8,25 +8,27 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import {addDeck} from '../actions/decks';
+import { handleAddCard } from '../actions/shared';
 import {generateUID} from '../utils/helper';
 
-const AddDeck = props => {
-  const {navigation} = props;
+const AddCard = props => {
+  const { navigation, route } = props;
+  const deckId = route?.params?.deckId;
   const dispatch = useDispatch();
-  const [deckTitleText, onChangeDeckTitleText] = React.useState();
+  const [cardQues, setCardQues] = useState('');
+  const [cardAns, setCardAns] = useState('');
 
-  const onPressAddDeck = () => {
-    const newDeckId = generateUID();
-    console.log('NEW DECK ID : ', newDeckId);
+  const onPressAddCard = () => {
+    const newCardId = generateUID();
     dispatch(
-      addDeck({
-        id: newDeckId,
-        title: deckTitleText,
-        cards: [],
+      handleAddCard({
+        ques: cardQues,
+        ans: cardAns,
+        cardId: newCardId,
+        deckId: deckId,
       }),
     );
-    navigation.navigate('DeckDetails', {deckId: newDeckId});
+    navigation.goBack();
   };
   const styles = StyleSheet.create({
     container: {
@@ -66,22 +68,28 @@ const AddDeck = props => {
 
   const AddDeckBody = () => (
     <View style={styles.deckBody}>
-      <Text style={{fontSize: 20}}>
-        What will be the title of this new Deck:
-      </Text>
+      <Text style={{ fontSize: 20 }}>Enter your question below:</Text>
       <TextInput
-        autoFocus={true}
         clearButtonMode={true}
         style={styles.input}
-        onChangeText={onChangeDeckTitleText}
-        value={deckTitleText}
-        placeholder={'Enter name of your Deck'}
+        onChangeText={text => setCardQues(text)}
+        defaultValue={cardQues}
+        placeholder={'Enter question for your card.'}
+      />
+      <Text style={{ fontSize: 20 }}>Enter your answer below:</Text>
+      <TextInput
+        autoFocus={false}
+        clearButtonMode={true}
+        style={styles.input}
+        onChangeText={text => setCardAns(text)}
+        defaultValue={cardAns}
+        placeholder={'Enter answer for the question.'}
       />
       <Button
-        onPress={onPressAddDeck}
-        title="Create Deck"
+        onPress={onPressAddCard}
+        title="Add Card"
         color="#841584"
-        accessibilityLabel="Add a new deck."
+        accessibilityLabel="Add a new card."
       />
     </View>
   );
@@ -94,4 +102,4 @@ const AddDeck = props => {
   );
 };
 
-export default connect()(AddDeck);
+export default connect()(AddCard);

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { Button, Text, View } from 'react-native';
+import {connect, useDispatch} from 'react-redux';
+import {Button, Text, View} from 'react-native';
 import {
   SafeAreaView,
   FlatList,
@@ -34,14 +34,13 @@ const styles = StyleSheet.create({
 });
 
 const Decks = props => {
-  const { navigation, decks } = props;
+  const {navigation, decks, deckKeys} = props;
 
   const onPressAddDeck = () => {
-    console.log('Adding a new deck.');
     navigation.navigate('AddDeck');
   };
 
-  const DeckItem = ({ title, count }) => (
+  const DeckItem = ({title, count}) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.title}>{count} cards</Text>
@@ -57,12 +56,11 @@ const Decks = props => {
     />
   );
 
-  const renderDeckRow = ({ item, index }) => {
-    const onPress = () =>
-      navigation.navigate('DeckDetails', { deckIndex: index });
+  const renderDeckRow = ({item}) => {
+    const onPress = () => navigation.navigate('DeckDetails', {deckId: item});
     return (
       <TouchableHighlight onPress={onPress}>
-        <DeckItem title={item.title} count={item.cards.length} />
+        <DeckItem title={decks[item].title} count={decks[item].cards.length} />
       </TouchableHighlight>
     );
   };
@@ -70,17 +68,20 @@ const Decks = props => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={decks}
+        data={deckKeys}
         renderItem={renderDeckRow}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item}
       />
       <AddDeck />
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = ({ decks }) => {
+const mapStateToProps = ({decks}) => {
+  const deckKeys = Object.keys(decks);
+
   return {
+    deckKeys,
     decks,
   };
 };
