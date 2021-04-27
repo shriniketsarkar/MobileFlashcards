@@ -1,5 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {connect, useDispatch} from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import QuizCard from './QuizCard';
 import QuizResult from './QuizResult';
 
 const Quiz = props => {
-  const {navigation, route, cards, decks} = props;
+  const { navigation, route, cards, decks } = props;
   const deckId = route?.params?.deckId;
   const cardKeys = decks[deckId].cards;
   const totalCards = cardKeys.length;
@@ -25,7 +25,7 @@ const Quiz = props => {
 
   const [showAnswer, setShowAnswer] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const {currentCardNo, remainingQues, correctAnsCount} = cardStatusRef.current;
+  const { currentCardNo, remainingQues, correctAnsCount } = cardStatusRef.current;
   const currentCard = cards[cardKeys[currentCardNo]];
   const [ansBtnText, setAnsBtnText] = useState('Show Answer');
   const [quesRemaining, setQuesRemaining] = useState(remainingQues);
@@ -93,26 +93,15 @@ const Quiz = props => {
     container: {
       flex: 1,
       justifyContent: 'center',
-      marginHorizontal: 16,
+      alignItems: 'center',
+      marginHorizontal: 5,
     },
     fullBody: {
       flex: 1,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-    },
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      width: '90%',
-    },
-    deckBody: {
       width: '97%',
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fff',
-      borderColor: 'green',
       alignSelf: 'center',
       shadowColor: '#000',
       shadowOffset: {
@@ -120,8 +109,26 @@ const Quiz = props => {
         height: 5,
       },
       shadowOpacity: 1,
-      shadowRadius: 2.49,
-      borderRadius: 2,
+      shadowRadius: 5.49,
+      borderRadius: 20,
+    },
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      width: '90%',
+    },
+    label: {
+      fontWeight: 'bold',
+      alignSelf: 'flex-end',
+      marginRight: 20,
+      fontSize: 16,
+    },
+    info: {
+      flex: 1,
+      alignSelf: 'center',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 
@@ -137,10 +144,8 @@ const Quiz = props => {
             navigation={navigation}
           />
         ) : (
-          <View>
-            <View>
-              <Text style={{fontSize: 20}}>{`${quesRemaining} remaining`}</Text>
-            </View>
+          <View style={styles.info}>
+            <Text style={styles.label}>{`${quesRemaining} remaining`}</Text>
             <QuizCard
               ques={currentCard.ques}
               ans={currentCard.ans}
@@ -152,20 +157,18 @@ const Quiz = props => {
               color="#841584"
               accessibilityLabel="Toggle to show answer to question."
             />
-            <View>
-              <Button
-                onPress={onPressCorrect}
-                title="Correct"
-                color="#841584"
-                accessibilityLabel="Answer was correct"
-              />
-              <Button
-                onPress={onPressWrong}
-                title="In Correct"
-                color="#841584"
-                accessibilityLabel="Answer was incorrect"
-              />
-            </View>
+            <Button
+              onPress={onPressCorrect}
+              title="Correct"
+              color="#841584"
+              accessibilityLabel="Answer was correct"
+            />
+            <Button
+              onPress={onPressWrong}
+              title="In Correct"
+              color="#841584"
+              accessibilityLabel="Answer was incorrect"
+            />
           </View>
         )}
       </View>
@@ -173,7 +176,7 @@ const Quiz = props => {
   );
 };
 
-const mapStateToProps = ({decks, cards}) => {
+const mapStateToProps = ({ decks, cards }) => {
   return {
     decks,
     cards,

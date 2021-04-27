@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import {connect, useDispatch} from 'react-redux';
 import {
   Text,
   View,
@@ -9,11 +9,11 @@ import {
   TextInput,
   Keyboard,
 } from 'react-native';
-import { addDeck } from '../actions/decks';
-import { generateUID } from '../utils/helper';
+import {addDeck} from '../actions/decks';
+import {generateUID} from '../utils/helper';
 
 const AddDeck = props => {
-  const { navigation } = props;
+  const {navigation} = props;
   const dispatch = useDispatch();
   const [deckTitleText, onChangeDeckTitleText] = useState('');
 
@@ -26,7 +26,7 @@ const AddDeck = props => {
         cards: [],
       }),
     );
-    navigation.navigate('DeckDetails', { deckId: newDeckId });
+    navigation.navigate('DeckDetails', {deckId: newDeckId});
   };
 
   const isCreateDisabled = () => {
@@ -41,22 +41,10 @@ const AddDeck = props => {
     },
     fullBody: {
       flex: 1,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-    },
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      width: '90%',
-    },
-    deckBody: {
       width: '97%',
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fff',
-      borderColor: 'green',
       alignSelf: 'center',
       shadowColor: '#000',
       shadowOffset: {
@@ -64,38 +52,47 @@ const AddDeck = props => {
         height: 5,
       },
       shadowOpacity: 1,
-      shadowRadius: 2.49,
-      borderRadius: 2,
+      shadowRadius: 5.49,
+      borderRadius: 20,
+    },
+    input: {
+      backgroundColor: 'white',
+      elevation: 5,
+      borderRadius: 5,
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      width: '90%',
+    },
+    label: {
+      fontWeight: 'bold',
+      alignSelf: 'flex-start',
+      marginLeft: 15,
     },
   });
 
-  const AddDeckBody = () => (
-    <View style={styles.deckBody}>
-      <Text style={{ fontSize: 20 }}>
-        What will be the title of this new Deck:
-      </Text>
-      <TextInput
-        autoFocus={true}
-        clearButtonMode={true}
-        onBlur={Keyboard.dismiss}
-        style={styles.input}
-        onChangeText={onChangeDeckTitleText}
-        value={deckTitleText}
-        placeholder={'Enter name of your Deck'}
-      />
-      <Button
-        onPress={onPressAddDeck}
-        disabled={isCreateDisabled()}
-        title="Create Deck"
-        color="#841584"
-        accessibilityLabel="Add a new deck."
-      />
-    </View>
-  );
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fullBody}>
-        <AddDeckBody />
+        <Text style={styles.label}>
+          What will be the title of this new Deck:
+        </Text>
+        <TextInput
+          autoFocus={true}
+          onBlur={Keyboard.dismiss}
+          style={styles.input}
+          onChangeText={onChangeDeckTitleText}
+          value={deckTitleText}
+          placeholder={'Enter name of your Deck'}
+          maxLength={100}
+        />
+        <Button
+          onPress={onPressAddDeck}
+          disabled={isCreateDisabled()}
+          title="Create Deck"
+          color="#841584"
+          accessibilityLabel="Add a new deck."
+        />
       </View>
     </SafeAreaView>
   );
