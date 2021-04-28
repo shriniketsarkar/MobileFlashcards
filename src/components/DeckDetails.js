@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { StyleSheet, Text, SafeAreaView, View, Button } from 'react-native';
+import { Text, SafeAreaView, View, Button } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { removeDeck } from '../actions/decks';
-import { clearAllLocalNotifications, setupLocalNotification } from '../utils/helper';
+import { styles } from './styles';
 
 const DeckDetails = props => {
   const { navigation, route, decks } = props;
@@ -23,12 +23,6 @@ const DeckDetails = props => {
     if (!deck.cards.length) {
       return navigation.navigate('Error');
     }
-    // Trigger clearing of notifcations and setup a new notification
-    // for until next time if the user has not started any quiz.
-    // Currently this time is set to next min for demo.
-    clearAllLocalNotifications().then(() => {
-      setupLocalNotification();
-    });
     navigation.navigate('Quiz', { deckId: deckId });
   };
 
@@ -37,46 +31,12 @@ const DeckDetails = props => {
     navigation.dispatch(StackActions.popToTop());
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      marginHorizontal: 5,
-    },
-    fullBody: {
-      flex: 1,
-      width: '97%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      alignSelf: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5.49,
-      borderRadius: 20,
-    },
-    label: {
-      fontWeight: 'bold',
-      fontSize: 20,
-      alignSelf: 'flex-start',
-      marginLeft: 15,
-      marginBottom: 10,
-    },
-    info: {
-      marginBottom: 20,
-    },
-  });
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fullBody}>
         <View style={styles.info}>
-          <Text style={styles.label}>{`Deck :   ${deck?.title}`}</Text>
-          <Text style={styles.label}>
+          <Text style={styles.detailsLabel}>{`Deck :   ${deck?.title}`}</Text>
+          <Text style={styles.detailsLabel}>
             {`Cards in Deck :   ${deck?.cards.length}`}
           </Text>
         </View>

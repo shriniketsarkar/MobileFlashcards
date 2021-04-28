@@ -1,0 +1,81 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  quizOuterContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  label: {
+    fontWeight: 'bold',
+    alignSelf: 'flex-end',
+    marginRight: 20,
+    fontSize: 16,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    width: '90%',
+  },
+  quizResult: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  quizResultLbl: {
+    fontSize: 20,
+    margin: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
+    marginLeft: 15,
+  },
+  fullBody: {
+    width: '100%',
+    height: '40%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    margin: 10,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5.49,
+    borderRadius: 20,
+  },
+  info: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  quizContainer: {
+    flex: 1,
+    width: '97%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 5.49,
+    borderRadius: 20,
+  },
+});

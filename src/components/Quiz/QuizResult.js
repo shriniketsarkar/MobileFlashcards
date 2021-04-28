@@ -1,32 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  fullBody: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  label: {
-    fontSize: 20,
-    margin: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
-    marginLeft: 15,
-  },
-});
+import { Text, View, Button } from 'react-native';
+import { clearAllLocalNotifications, setupLocalNotification } from '../../utils/helper';
+import { styles } from './styles';
 
 const QuizResult = props => {
   const { navigation, deckTitle, correctAns, totalCards, reStartQuiz } = props;
 
   const onPressBack = () => {
+    // Trigger clearing of notifcations and setup a new notification
+    // for until next time if the user has not started any quiz.
+    // Currently this time is set to next min for demo.
+    clearAllLocalNotifications().then(() => {
+      setupLocalNotification();
+    });
     navigation.goBack();
   };
 
@@ -36,16 +22,16 @@ const QuizResult = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.fullBody}>
+      <View style={styles.quizResult}>
         <View>
-          <Text style={styles.label}>{'Quiz Results'}</Text>
+          <Text style={styles.quizResultLbl}>{'Quiz Results'}</Text>
         </View>
-        <Text style={styles.label}>{`Quiz : ${deckTitle}`}</Text>
-        <Text style={styles.label}>
+        <Text style={styles.quizResultLbl}>{`Quiz : ${deckTitle}`}</Text>
+        <Text style={styles.quizResultLbl}>
           {`You scored ${correctAns} correct out of ${totalCards}`}
         </Text>
         <View>
-          <Text style={styles.label}>
+          <Text style={styles.quizResultLbl}>
             {Math.floor(correctAns / totalCards) * 100 > 70
               ? 'Amazing job scoring high!!'
               : 'Better luck next time.'}

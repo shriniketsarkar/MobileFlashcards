@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Button, SafeAreaView, StyleSheet } from 'react-native';
+import { Text, View, Button, SafeAreaView } from 'react-native';
 import QuizCard from './QuizCard';
 import QuizResult from './QuizResult';
+import {styles} from './styles';
 
 const Quiz = props => {
   const { navigation, route, cards, decks } = props;
@@ -82,52 +83,9 @@ const Quiz = props => {
     setQuesRemaining(cardStatusRef.current.remainingQues);
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 5,
-    },
-    fullBody: {
-      flex: 1,
-      width: '97%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      alignSelf: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5.49,
-      borderRadius: 20,
-    },
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      width: '90%',
-    },
-    label: {
-      fontWeight: 'bold',
-      alignSelf: 'flex-end',
-      marginRight: 20,
-      fontSize: 16,
-    },
-    info: {
-      flex: 1,
-      alignSelf: 'center',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.fullBody}>
+    <SafeAreaView style={styles.quizOuterContainer}>
+      <View style={styles.quizContainer}>
         {showResult ? (
           <QuizResult
             deckTitle={decks[deckId].title}

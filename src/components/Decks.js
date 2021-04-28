@@ -1,13 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Button, Text, View } from 'react-native';
-import {
-  SafeAreaView,
-  FlatList,
-  StyleSheet,
-  StatusBar,
-  TouchableHighlight,
-} from 'react-native';
+import { SafeAreaView, FlatList, TouchableHighlight } from 'react-native';
+import { styles } from './styles';
 
 const Decks = props => {
   const { navigation, decks, deckKeys } = props;
@@ -32,31 +27,8 @@ const Decks = props => {
     );
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight || 0,
-    },
-    item: {
-      backgroundColor: '#fff',
-      padding: 10,
-      marginVertical: 8,
-      marginHorizontal: 16,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 4.49,
-      borderRadius: 5,
-    },
-    title: {
-      fontSize: 20,
-    },
-  });
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.deckContainer}>
       <FlatList
         data={deckKeys}
         renderItem={renderDeckRow}

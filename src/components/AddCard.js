@@ -5,12 +5,12 @@ import {
   View,
   Button,
   SafeAreaView,
-  StyleSheet,
   TextInput,
   Keyboard,
 } from 'react-native';
 import { handleAddCard } from '../actions/shared';
 import { generateUID } from '../utils/helper';
+import { styles } from './styles';
 
 const AddCard = props => {
   const { navigation, route } = props;
@@ -39,43 +39,6 @@ const AddCard = props => {
     );
     navigation.goBack();
   };
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      marginHorizontal: 5,
-    },
-    fullBody: {
-      flex: 1,
-      width: '97%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      alignSelf: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5.49,
-      borderRadius: 20,
-    },
-    input: {
-      backgroundColor: 'white',
-      elevation: 5,
-      borderRadius: 5,
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      width: '90%',
-    },
-    label: {
-      fontWeight: 'bold',
-      alignSelf: 'flex-start',
-      marginLeft: 15,
-    },
-  });
 
   const isCreateDisabled = () => {
     return cardQues.length === 0 || cardAns.length === 0;

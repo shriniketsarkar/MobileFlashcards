@@ -1,36 +1,8 @@
 import React from 'react';
-import {Text, View, SafeAreaView, StyleSheet} from 'react-native';
+import {Text, View, SafeAreaView} from 'react-native';
+import {styles} from './styles';
 
 const Error = () => {
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    fullBody: {
-      flex: 1,
-      width: '97%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      alignSelf: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5.49,
-      borderRadius: 20,
-    },
-    label: {
-      fontWeight: 'bold',
-      fontSize: 15,
-      alignSelf: 'center',
-      marginLeft: 15,
-    },
-  });
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fullBody}>
